@@ -69,6 +69,30 @@ Install zsh:
 ansible-playbook zsh_playbook.yaml --become-password-file sudo_pass
 ```
 
+
+
 ---
 
-to be continued..
+### Additional features
+
+**Configure ssh alias**
+
+(on host)
+```sh
+cat << EOF >> $HOME/.ssh/config 
+Host SERVER_ALIAS
+Hostname SERVER_IP
+User www
+Port 22
+IdentityFile ~/.ssh/SSH_KEY_NAME
+ServerAliveInterval 20
+TCPKeepAlive no
+EOF
+```
+
+connect to server with alias:
+```sh
+ssh SERVER_ALIAS
+```
+
+---
