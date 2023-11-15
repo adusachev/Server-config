@@ -1,0 +1,58 @@
+---
+- hosts: ubuntu
+  vars:
+      username: www
+
+  tasks:
+    - name: "Install ZSH"
+      become: true
+      ansible.builtin.package:
+        name: zsh
+        state: present
+
+    - name: "Get stats of the .oh-my-zsh/ object"
+      ansible.builtin.stat:
+        path: "/home/{{ username }}/.oh-my-zsh/"
+      register: p
+
+    - name: "Download Oh-My-Zsh installer"
+      get_url:
+        url: https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+        dest: "/home/{{ username }}/ohmyzsh_install.sh"
+        mode: 'u+rwx'
+      when: (p.stat.isdir is defined and p.stat.isdir) == False
+
+    - name: "Run the install script"
+      shell: "yes | /home/{{ username }}/ohmyzsh_install.sh"
+      when: (p.stat.isdir is defined and p.stat.isdir) == False  # determine if a path exists and is a directory.
+
+    - name: "Install zsh-autosuggestions plugin"
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions
+        dest: "/home/{{ username }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+        depth: 1
+    
+    - name: "Install zsh-completions plugin"
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-completions
+        dest: "/home/{{ username }}/.oh-my-zsh/custom/plugins/zsh-completions"
+        depth: 1
+    
+    - name: "Install zsh-syntax-highlighting plugin"
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+        dest: "/home/{{ username }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+        depth: 1
+
+    - name: "Enable plugins"
+      replace:
+        path: "/home/{{ username }}/.zshrc"
+        regexp: "plugins=.git.\n"
+        replace: "plugins=(git zsh-syntax-highlighting zsh-autosuggestions)"
+    
+    - name: "Change user shell to zsh"
+      become: yes
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        shell: /bin/zsh
+    

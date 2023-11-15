@@ -1,0 +1,4 @@
+.vscode/
+venv*/
+hosts
+sudo_pass
