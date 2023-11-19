@@ -56,7 +56,7 @@ ansible ubuntu -m ping
 
 Install packages:
 ```sh
-ansible-playbook packages_playbook.yaml --become-password-file sudo_pass
+ansible-playbook basic_setup_playbook.yaml --become-password-file sudo_pass
 ```
 
 Install docker:
