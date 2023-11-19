@@ -47,7 +47,7 @@
     - name: "Enable plugins"
       replace:
         path: "/home/{{ username }}/.zshrc"
-        regexp: "plugins=.git.\n"
+        regexp: "^plugins=\\(.*\\)$"
         replace: "plugins=(git zsh-syntax-highlighting zsh-autosuggestions)"
     
     - name: "Change user shell to zsh"
