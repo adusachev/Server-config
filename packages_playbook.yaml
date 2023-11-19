@@ -1,5 +1,7 @@
 ---
 - hosts: ubuntu
+  vars:
+      username: www
 
   tasks:  
     - name: "Install packages"
@@ -21,3 +23,30 @@
           - ca-certificates
           - gnupg
         update_cache: yes
+
+    - name: "Allow new user"
+      become: true
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^AllowUsers"
+        line: "AllowUsers {{ username }}"
+        state: present
+        backup: yes
+
+    - name: "Disable Root Login"
+      become: true
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin no"
+        state: present
+        backup: yes
+      notify:
+        - Restart SSH
+
+  handlers:
+    - name: Restart SSH
+      become: yes
+      service:
+        name: sshd
+        state: restarted
