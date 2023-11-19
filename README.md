@@ -54,7 +54,7 @@ ansible ubuntu -m ping
 
 (on host)
 
-Install packages:
+Install packages, disable root login, restart sshd:
 ```sh
 ansible-playbook basic_setup_playbook.yaml --become-password-file sudo_pass
 ```
@@ -64,7 +64,7 @@ Install docker:
 ansible-playbook docker_playbook.yaml --become-password-file sudo_pass
 ```
 
-Install zsh:
+Install zsh, ohmyzsh, plugins:
 ```sh
 ansible-playbook zsh_playbook.yaml --become-password-file sudo_pass
 ```
