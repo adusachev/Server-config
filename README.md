@@ -7,20 +7,20 @@
 ssh root@[SERVER_IP]
 ```
 
-(on server) Create new user `www`:
+(on server) Create new user `admin`:
 ```sh
-adduser www
-# create password for "www" user
+adduser admin
+# create password for "admin" user
 ```
 
-(on server) Grant sudo priveleges to `www`:
+(on server) Grant sudo priveleges to `admin`:
 ```sh
-adduser www sudo
+adduser admin sudo
 ```
 
 (on host) Add ssh keys:
 ```sh
-ssh-copy-id -i $HOME/.ssh/[SSH_KEY_NAME].pub www@[SERVER_IP]
+ssh-copy-id -i $HOME/.ssh/[SSH_KEY_NAME].pub admin@[SERVER_IP]
 ```
 
 
@@ -37,7 +37,7 @@ vim hosts
 
 ```sh
 vim sudo_pass
-# write sudo password for "www" user here
+# write sudo password for "admin" user here
 ```
 ```sh
 chmod go-rw sudo_pass
@@ -82,7 +82,7 @@ ansible-playbook zsh_playbook.yaml --become-password-file sudo_pass
 cat << EOF >> $HOME/.ssh/config 
 Host SERVER_ALIAS
 Hostname SERVER_IP
-User www
+User admin
 Port 22
 IdentityFile ~/.ssh/SSH_KEY_NAME
 ServerAliveInterval 20

@@ -1,7 +1,7 @@
 ---
 - hosts: ubuntu
   vars:
-      username: www
+      username: admin
 
   tasks:  
     - name: "Add Docker's official GPG key"
