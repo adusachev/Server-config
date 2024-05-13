@@ -23,6 +23,15 @@ adduser admin sudo
 ssh-copy-id -i $HOME/.ssh/[SSH_KEY_NAME].pub admin@[SERVER_IP]
 ```
 
+---
+
+### Install Ansible
+
+```sh
+python3 -m venv venv
+source venv/bin/activate
+pip install ansible
+```
 
 ---
 
@@ -31,6 +40,7 @@ ssh-copy-id -i $HOME/.ssh/[SSH_KEY_NAME].pub admin@[SERVER_IP]
 (on host)
 
 ```sh
+cp ./hosts.example ./hosts
 vim hosts
 # add your SERVER_IP and SSH_KEY_NAME
 ```
