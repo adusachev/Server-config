@@ -27,6 +27,7 @@ ssh-copy-id -i $HOME/.ssh/[SSH_KEY_NAME].pub admin@[SERVER_IP]
 
 ### Install Ansible
 
+(on host)
 ```sh
 python3 -m venv venv
 source venv/bin/activate
